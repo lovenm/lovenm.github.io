@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <link rel="stylesheet" href="./reset.css">
+
+  <style>
+    body {
+      background-color: gainsboro;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #sad-cat {
+      position: absolute;
+      transition: transform 0.2s;
+      transform-origin: center center;
+      animation: spin 3s linear infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <img id="sad-cat" height="50rem" src="./sad-cat-thumb.png" alt="Sad cat" />
+
+  <script>
+    window.onload = () => {
+      const sadCat = document.getElementById("sad-cat")
+
+      let posX = Math.random() * (window.innerWidth - 100)
+      let posY = Math.random() * (window.innerHeight - 100)
+      let velX = 3
+      let velY = 3
+      let speed = 6
+
+      // Set initial position
+      sadCat.style.left = `${posX}px`
+      sadCat.style.top = `${posY}px`
+
+      function updatePosition() {
+        // Update position based on velocity
+        posX += velX * (speed / 5)
+        posY += velY * (speed / 5)
+
+        // Check for collisions with x axis edges
+        if (posX <= 0 || posX >= window.innerWidth - sadCat.offsetWidth) {
+          velX = -velX
+        }
+
+        // Check for collisions with y axis edges
+        if (posY <= 0 || posY >= window.innerHeight - sadCat.offsetHeight) {
+          velY = -velY
+        }
+
+        // Make sure the image stays within bounds
+        posX = Math.max(0, Math.min(posX, window.innerWidth - sadCat.offsetWidth))
+        posY = Math.max(0, Math.min(posY, window.innerHeight - sadCat.offsetHeight))
+
+        // Apply position
+        sadCat.style.left = `${posX}px`
+        sadCat.style.top = `${posY}px`
+
+        // Continue animation
+        requestAnimationFrame(updatePosition)
+      }
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        posX = Math.min(posX, window.innerWidth - sadCat.offsetWidth);
+        posY = Math.min(posY, window.innerHeight - sadCat.offsetHeight);
+      });
+
+      requestAnimationFrame(updatePosition)
+    }
+  </script>
+</body>
+
+</html>

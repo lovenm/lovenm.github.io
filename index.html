@@ -34,11 +34,16 @@
   <script>
     window.onload = () => {
       const sadCat = document.getElementById("sad-cat")
+      const maxVel = 5;
 
-      let posX = Math.random() * (window.innerWidth - 100)
-      let posY = Math.random() * (window.innerHeight - 100)
-      let velX = 3
-      let velY = 3
+      function getRandom(min, max) {
+        return min + (max - min) * Math.random();
+      }
+
+      let posX = getRandom(0, window.innerWidth)
+      let posY = getRandom(0, window.innerHeight)
+      let velX = getRandom(-maxVel, maxVel)
+      let velY = getRandom(-maxVel, maxVel)
       let speed = 6
 
       // Set initial position
